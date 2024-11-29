@@ -1,0 +1,12 @@
+[Unit]
+Description=monitor server
+Requires=network.target
+
+[Service]
+WorkingDirectory=/root/walless/monitor/server
+ExecStart=/root/walless/monitor/server/sergate
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target
+
