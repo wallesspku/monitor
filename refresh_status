@@ -6,12 +6,14 @@ from walless_utils import db, setup_everything, cfg
 
 def main():
     setup_everything()
-    all_nodes = db.all_servers()
-    all_nodes.sort(key=lambda n: 'hidden' in n.tag)
+    all_nodes = db.all_servers(include_delete=False)
     configs = list()
     for node in all_nodes:
-        if 'no_monitor' in node.properties or (node.ipv4 is None and node.ipv6 is None):
+        if 'no_monitor' in node.properties:
             continue
+        if (node.ipv4 is None and node.ipv6 is None):
+            continue
+            
         name = node.name.split()[0] + f' [{node.node_id}]'
         configs.append({
             'username': node.uuid,
